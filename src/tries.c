@@ -199,12 +199,12 @@ void get_path_recursive(TrieNode *node, char *current_path, int depth,
     if (node->is_leaf)
     {
         current_path[depth] = '\0'; // Null terminate the current path
-        if (strstr(current_path, "backup") == NULL)
-        {
+        // if (strstr(current_path, "backup") == NULL)
+        // {
             string_append(output_buffer, buffer_pos, max_size,
                           "%s\n",
                           current_path);
-        }
+        // }
     }
 
     // Recursively traverse all possible children

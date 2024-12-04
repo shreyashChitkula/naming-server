@@ -27,7 +27,6 @@ extern int storage_server_count;
 extern pthread_mutex_t lock;
 extern TrieNode *trieRoot;
 
-
 int send_message_to_host(char *ip, int port, Packet *packet)
 {
     int sockfd;
@@ -88,12 +87,16 @@ int send_message_to_host(char *ip, int port, Packet *packet)
 //     send.request_type = 9;
 //     send_message_to_host("10.42.0.25", 8083, &send);
 // }
-int status_check(char * ip,int port){
+int status_check(char *ip, int port)
+{
     for (int i = 0; i < storage_server_count; i++)
     {
-        
+        if (strcmp(storage_servers[i].ip, ip) == 0 && port == storage_servers[i].client_port)
+        {
+            return storage_servers[i].status;
+        }
     }
-    
+    return 0;
 }
 
 char *extract_file_name(char *path)
@@ -153,7 +156,65 @@ void add_path(StorageServerInfo *storageServer, char *directory, char *fileName)
         }
     }
 }
-
+// Function to get the path after a specific folder name
+const char *get_path_after_folder(const char *full_path, const char *folder_name)
+{
+    const char *folder_position = strstr(full_path, folder_name);
+    if (folder_position)
+    {
+        // Move the pointer to the end of the folder name
+        folder_position += strlen(folder_name);
+        // Ensure it starts with a '/' if the path continues
+        if (*folder_position == '/')
+            return folder_position + 1; // Skip the '/'
+    }
+    return NULL; // Folder name not found in the path
+}
+char *remove_prefix(char *str)
+{
+    // Check if the string starts with "./"
+    if (strstr(str, "./") == str)
+    {
+        return str + 2; // Skip the first two characters
+    }
+    return str; // Return the original string if no "./" prefix
+}
+void add_paths(StorageServerInfo *source, StorageServerInfo *dest, char *srcPath, char *destPath)
+{
+    for (int i = 0; i < source->pathscount; i++)
+    {
+        if (strncmp(source->paths[i], srcPath, strlen(srcPath)) == 0)
+        {
+            char *present_dir = NULL;
+            const char *slash_position = strrchr(srcPath, '/'); // Find the last '/'
+            if (slash_position)
+            {
+                present_dir = (char *)(slash_position + 1); // Valid pointer to the part after the '/'
+            }
+            else
+            {
+                present_dir = ""; // If no '/' is found, set to an empty string
+            }
+            printf("Present_dir: %s\n", present_dir);
+            char path[MAX_PATH_LENGTH];
+            char *relative_path = get_path_after_folder(source->paths[i], srcPath);
+            printf("relatie_path:%s\n", relative_path);
+            if (relative_path == NULL)
+            {
+                relative_path = "\0";
+                snprintf(path, MAX_PATH_LENGTH, "%s/%s", destPath, present_dir);
+            }
+            else
+            {
+                snprintf(path, MAX_PATH_LENGTH, "%s/%s/%s", destPath, present_dir, relative_path);
+            }
+            snprintf(dest->paths[dest->pathscount], MAX_PATH_LENGTH, path);
+            insertPath(trieRoot, dest->paths[dest->pathscount], dest->ip, dest->client_port);
+            printf("Path Added:%s\n", path);
+            dest->pathscount++;
+        }
+    }
+}
 
 int compare_2d_arrays(const char arr1[][MAX_PATH_LENGTH], const char arr2[][MAX_PATH_LENGTH], size_t row_count)
 {
@@ -177,3 +238,48 @@ void clear_socket_buffer(int socket_fd)
     } while (bytes_read > 0);
 }
 
+void modify_backup()
+{
+    // pthread_mutex_lock(&lock);
+    for (int i = 0; i < storage_server_count; i++)
+    {
+        ClientMessage msg;
+        memset(&msg, 0, sizeof(ClientMessage));
+        msg.request_type = DELETE_REQ;
+        snprintf(msg.path, MAX_PATH_LENGTH, "%s/backup", storage_servers[i].paths[0]);
+        printf("Client Request: Request_type:%d path:%s name:%s content:%s destination_path:%s\n",
+               msg.request_type, msg.path, msg.name, msg.content, msg.dest_path);
+        // send(storage_server_sockets[i], &msg, sizeof(ClientMessage), 0);
+        handle_delete_request(&msg, -1);
+        memset(&msg, 0, sizeof(ClientMessage));
+        msg.request_type = CREATE_REQ;
+        snprintf(msg.path, MAX_PATH_LENGTH, "%s", storage_servers[i].paths[0]);
+        snprintf(msg.name, FILENAME_LENGTH, "backup");
+        printf("Client Request: Request_type:%d path:%s name:%s content:%s destination_path:%s\n",
+               msg.request_type, msg.path, msg.name, msg.content, msg.dest_path);
+        // send(storage_server_sockets[i], &msg, sizeof(ClientMessage), 0);
+        handle_create_request(-1, &msg);
+    }
+    for (int i = 0; i < storage_server_count; i++)
+    {
+        for (int j = i + 1; j <= i + 1; j++)
+        {
+            ClientMessage msg;
+            memset(&msg, 0, sizeof(ClientMessage));
+            msg.request_type = COPY_REQ;
+            snprintf(msg.path, MAX_PATH_LENGTH, "%s", storage_servers[i].paths[0]);
+            snprintf(msg.dest_path, MAX_PATH_LENGTH, "%s/backup", storage_servers[(j % storage_server_count)].paths[0]);
+            printf("Client Request: Request_type:%d path:%s name:%s content:%s destination_path:%s\n",
+                   msg.request_type, msg.path, msg.name, msg.content, msg.dest_path);
+            copy(&msg, -1);
+            memset(&msg, 0, sizeof(ClientMessage));
+            msg.request_type = DELETE_REQ;
+            snprintf(msg.path, MAX_PATH_LENGTH, "%s/backup/%s/backup", storage_servers[(j % storage_server_count)].paths[0], remove_prefix(storage_servers[i].paths[0]));
+            printf("Client Request: Request_type:%d path:%s name:%s content:%s destination_path:%s\n",
+                   msg.request_type, msg.path, msg.name, msg.content, msg.dest_path);
+            handle_delete_request(&msg, -1);
+        }
+    }
+
+    // pthread_mutex_unlock(&lock);
+}

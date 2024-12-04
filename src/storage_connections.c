@@ -234,6 +234,11 @@ int add_or_update_storage_server(StorageServerInfo *storageServer, int socket_fd
     }
     storage_server_count++;
     printf("Updated count:%d\n", storage_server_count);
+
+    // if (storage_server_count >= 2)
+    // {
+    //     modify_backup();
+    // }
     // storage_servers[storage_server_count] = info;
 
     return 0; // Added successfully

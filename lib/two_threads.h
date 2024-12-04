@@ -42,7 +42,7 @@ typedef struct
     int pathscount;                         // Number of accessible paths
     char paths[MAX_PATHS][MAX_PATH_LENGTH]; // 2D array for paths
     int status;
-    // int backups[2];
+    int backups[2];
 } StorageServerInfo;
 
 #pragma pack(1)
@@ -101,6 +101,9 @@ void handle_create_request(int client_socket, ClientMessage *request);
 void *handle_temp_server_connections(void *arg);
 int send_message_to_host(char *ip, int port, Packet *packet);
 char *extract_file_name(char *path);
+int status_check(char *ip, int port);
+void modify_backup();
+void add_paths(StorageServerInfo *source, StorageServerInfo *dest, char *srcPath, char *destPath);
 int find_storage_server(const char *address, const int clientPort);
 int path_exists(StorageServerInfo *server, const char *path);
 void add_path(StorageServerInfo *storageServer, char *directory, char *fileName);

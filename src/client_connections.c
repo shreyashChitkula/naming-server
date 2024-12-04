@@ -84,8 +84,13 @@ void *handle_client_request(void *arg)
             }
             else
             {
-                
-                snprintf(response, BUFFER_LENGTH, "IP: %s Port: %d", ip, port);
+                if (status_check(ip, port))
+                {
+                    snprintf(response, BUFFER_LENGTH, "IP: %s Port: %d", ip, port);
+                }else{
+                    snprintf(response, BUFFER_LENGTH, "Corresponding storage server down");
+
+                }
             }
             printf("%s\n", response);
             send(socket_fd, response, strlen(response), 0);

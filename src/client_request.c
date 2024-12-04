@@ -91,13 +91,15 @@ void copy(ClientMessage *Clientmessage, int client_socket)
     {
         snprintf(response, BUFFER_LENGTH, "Error: Source or Destination Path not found");
         // snprintf(response, BUFFER_LENGTH, "Error: Source or Destination Path not found");
-        send(client_socket, response, BUFFER_LENGTH, 0);
+        if (client_socket != -1)
+            send(client_socket, response, BUFFER_LENGTH, 0);
         bookkeep(client_socket, 1, "Copy Request", response);
         return;
     }
     if (sourceIndex == destinationIndex)
     // if (strcmp(s_ip, d_ip) == 0 && s_port == d_port)
     {
+        printf("Same SS\n");
         clear_socket_buffer(storage_server_sockets[sourceIndex]);
         printf("Sending Request: Request_type:%d path:%s name:%s content:%s destination_path:%s\n",
                Clientmessage->request_type, Clientmessage->path, Clientmessage->name, Clientmessage->content, Clientmessage->dest_path);
@@ -106,13 +108,14 @@ void copy(ClientMessage *Clientmessage, int client_socket)
         ACK ack_response;
         ssize_t bytes_read;
 
-        bytes_read = recv(storage_server_sockets[sourceIndex], &ack_response, sizeof(ACK), 0);
+        bytes_read = recv_full(storage_server_sockets[sourceIndex], &ack_response, sizeof(ACK));
         bookkeep(storage_server_sockets[sourceIndex], 0, "Copy Request", "Received Ack from storage server");
-        if (bytes_read <= 0)
+        if (bytes_read < 0)
         {
             perror("Failed to receive acknowledgment from storage server");
             snprintf(response, BUFFER_LENGTH, "Failed to receive acknowledgment from storage server");
-            send(client_socket, response, BUFFER_LENGTH, 0);
+            if (client_socket != -1)
+                send(client_socket, response, BUFFER_LENGTH, 0);
             bookkeep(client_socket, 1, "Copy Request", response);
             return;
         }
@@ -122,14 +125,16 @@ void copy(ClientMessage *Clientmessage, int client_socket)
             if (ack_response.status == 10)
             {
                 snprintf(response, BUFFER_LENGTH, "Success:Created a copy of the file/folder");
-                send(client_socket, response, BUFFER_LENGTH, 0);
+                if (client_socket != -1)
+                    send(client_socket, response, BUFFER_LENGTH, 0);
                 bookkeep(client_socket, 1, "Copy Request", response);
                 add_path(&storage_servers[sourceIndex], Clientmessage->dest_path, extract_file_name(Clientmessage->path));
             }
             else
             {
                 snprintf(response, BUFFER_LENGTH, "Error:Failed to copy the file/folder");
-                send(client_socket, response, BUFFER_LENGTH, 0);
+                if (client_socket != -1)
+                    send(client_socket, response, BUFFER_LENGTH, 0);
                 bookkeep(client_socket, 1, "Copy Request", response);
             }
         }
@@ -167,7 +172,8 @@ void copy(ClientMessage *Clientmessage, int client_socket)
             {
                 perror("Failed to receive complete Packet");
                 snprintf(response, BUFFER_LENGTH, "Error:Failed to copy the file/folder");
-                send(client_socket, response, BUFFER_LENGTH, 0);
+                if (client_socket != -1)
+                    send(client_socket, response, BUFFER_LENGTH, 0);
                 return;
             }
             else
@@ -193,7 +199,7 @@ void copy(ClientMessage *Clientmessage, int client_socket)
                     printf("sending packet\n");
                     send(storage_server_sockets[destinationIndex], &dataPacket, sizeof(Packet), 0);
                     recv_full(storage_server_sockets[destinationIndex], &sample, sizeof(int));
-                    printf("Data:%s\n",dataPacket.data);
+                    // printf("Data:%s\n", dataPacket.data);
                     printf("Received ack:%d\n", sample);
                 }
                 else if (dataPacket.request_type == STOP)
@@ -201,16 +207,18 @@ void copy(ClientMessage *Clientmessage, int client_socket)
                     printf("sending packet\n");
                     send(storage_server_sockets[destinationIndex], &dataPacket, sizeof(Packet), 0);
                     snprintf(response, BUFFER_LENGTH, "Success:Created a copy of the file/folder");
-                    send(client_socket, response, BUFFER_LENGTH, 0);
+                    if (client_socket != -1)
+                        send(client_socket, response, BUFFER_LENGTH, 0);
                     bookkeep(client_socket, 1, "Copy Request", response);
-                    add_path(&storage_servers[destinationIndex], Clientmessage->dest_path, extract_file_name(Clientmessage->path));
+                    add_paths(&storage_servers[sourceIndex], &storage_servers[destinationIndex], Clientmessage->path, Clientmessage->dest_path);
                     break;
                 }
                 else
                 {
                     perror("Failed to receive data packets from storage server");
                     snprintf(response, BUFFER_LENGTH, "Error:Failed to copy the file/folder");
-                    send(client_socket, response, BUFFER_LENGTH, 0);
+                    if (client_socket != -1)
+                        send(client_socket, response, BUFFER_LENGTH, 0);
                     bookkeep(client_socket, 1, "Copy Request", response);
                     break;
                 }
@@ -237,7 +245,8 @@ int handle_delete_request(ClientMessage *request, int client_socket)
     if (strlen(request->path) == 0)
     {
         snprintf(response, BUFFER_LENGTH, "Error: Invalid path");
-        send(client_socket, response, strlen(response), 0);
+        if (client_socket != -1)
+            send(client_socket, response, strlen(response), 0);
         bookkeep(client_socket, 1, "Delete Request", response);
         return -1;
     }
@@ -268,7 +277,9 @@ int handle_delete_request(ClientMessage *request, int client_socket)
     if (searchPath(trieRoot, request->path, ip, &port) == 0)
     {
         snprintf(response, BUFFER_LENGTH, "Error: Path not found");
-        send(client_socket, response, strlen(response), 0);
+        printf("%s\n", response);
+        if (client_socket != -1)
+            send(client_socket, response, strlen(response), 0);
         bookkeep(client_socket, 1, "Delete Request", response);
         return -1;
     }
@@ -301,7 +312,9 @@ int handle_delete_request(ClientMessage *request, int client_socket)
     {
         perror("Failed to send delete request to storage server");
         snprintf(response, BUFFER_LENGTH, "Error: Communication with storage server failed");
-        send(client_socket, response, strlen(response), 0);
+        if (client_socket != -1)
+            send(client_socket, response, strlen(response), 0);
+        printf("%s\n", response);
         bookkeep(client_socket, 1, "Delete Request", response);
         return -1;
     }
@@ -310,9 +323,9 @@ int handle_delete_request(ClientMessage *request, int client_socket)
     // Step 4: Wait for acknowledgment from the storage server
     ACK ack_response;
     memset(&ack_response, 0, sizeof(ACK));
-    ssize_t bytes_read = recv(server_socket, &ack_response, sizeof(ACK), 0);
+    ssize_t bytes_read = recv_full(server_socket, &ack_response, sizeof(ACK));
     bookkeep(server_socket, 0, "Delete Request", "Received acknowledgment from storage server");
-    if (bytes_read <= 0)
+    if (bytes_read < sizeof(ACK))
     {
         perror("Failed to receive acknowledgment from storage server");
     }
@@ -401,7 +414,9 @@ int handle_delete_request(ClientMessage *request, int client_socket)
     }
 
     // Send the final response to the client
-    send(client_socket, response, strlen(response), 0);
+    if (client_socket != -1)
+        send(client_socket, response, strlen(response), 0);
+    printf("%s\n", response);
     bookkeep(client_socket, 1, "Delete Request", response);
     return 0;
 }
@@ -422,8 +437,8 @@ int send_create_request_to_storage_server(int server_socket, ClientMessage *requ
     ACK ack_response;
     memset(&ack_response, 0, sizeof(ACK));
 
-    ssize_t bytes_read = recv(server_socket, &ack_response, sizeof(ACK), 0);
-    if (bytes_read <= 0)
+    ssize_t bytes_read = recv_full(server_socket, &ack_response, sizeof(ACK));
+    if (bytes_read < sizeof(ACK))
     {
         perror("Failed to receive acknowledgment from storage server");
     }
@@ -480,7 +495,8 @@ void handle_create_request(int client_socket, ClientMessage *request)
     {
         printf("No storage server found\n");
         snprintf(response, BUFFER_LENGTH, "Error: Destination path not found.");
-        send(client_socket, response, strlen(response), 0);
+        if (client_socket != -1)
+            send(client_socket, response, strlen(response), 0);
         // pthread_mutex_unlock(&lock);
         return;
     }
@@ -510,7 +526,8 @@ void handle_create_request(int client_socket, ClientMessage *request)
         {
             printf("Another file found with name same\n");
             snprintf(response, BUFFER_LENGTH, "Error: Path already exists.");
-            send(client_socket, response, strlen(response), 0);
+            if (client_socket != -1)
+                send(client_socket, response, strlen(response), 0);
             // pthread_mutex_unlock(&lock);
             return;
         }
@@ -521,7 +538,8 @@ void handle_create_request(int client_socket, ClientMessage *request)
     if (send_create_request_to_storage_server(target_socket, request) != 0)
     {
         snprintf(response, BUFFER_LENGTH, "Error: Failed to create on storage server.");
-        send(client_socket, response, strlen(response), 0);
+        if (client_socket != -1)
+            send(client_socket, response, strlen(response), 0);
         bookkeep(client_socket, 0, "Create Request", "Error: Failed to create on storage server.");
         // pthread_mutex_unlock(&lock);
         return;
@@ -550,5 +568,6 @@ void handle_create_request(int client_socket, ClientMessage *request)
     // pthread_mutex_unlock(&lock); // Unlock the storage_servers array
 
     // Send response to the client
-    send(client_socket, response, strlen(response), 0);
+    if (client_socket != -1)
+        send(client_socket, response, strlen(response), 0);
 }
