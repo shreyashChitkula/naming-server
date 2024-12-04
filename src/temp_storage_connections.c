@@ -17,6 +17,9 @@ void *handle_tempSS_server(void *arg)
     printf("Entered tempss server\n");
     int socket_fd = *(int *)arg;
     free(arg); // Free the memory allocated for the socket file descriptor
+    int client_port = -1;
+    recv(socket_fd, &client_port, sizeof(int), 0);
+    printf("CLient Port:%d\n", client_port);
 
     while (1)
     {
@@ -35,7 +38,7 @@ void *handle_tempSS_server(void *arg)
         get_ip_address(socket_fd, ip);
         if (bytes_read <= 0)
         {
-            perror("Failed to read from client socket");
+            perror("Failed to read from storage socket");
 
             Packet status;
             memset(&status, 0, sizeof(Packet));
@@ -46,9 +49,12 @@ void *handle_tempSS_server(void *arg)
             for (int i = 0; i < storage_server_count; i++)
             {
                 // printf("%s\n", storage_servers[i].ip);
-                if (strcmp(storage_servers[i].ip, ip) == 0)
+                if (strcmp(storage_servers[i].ip, ip) == 0 && client_port == storage_servers[i].client_port)
                 {
                     index = i;
+                    printf("Status before updation:%d\n", storage_servers[i].status);
+                    storage_servers[i].status = 0;
+                    printf("Status after updation of storage server %d:%d\n", i + 1, storage_servers[i].status);
                     break;
                 }
             }

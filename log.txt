@@ -1,0 +1,968 @@
+FROM: 10.42.0.181:8081
+TYPE: Client Connection
+DATA: Connection Connected
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:1
+DATA: <no data>
+
+TO: 10.42.0.181:8081
+TYPE: List All Files
+DATA: ./test2
+./test2/hell.txt
+./test2/ttes
+./test2/ttes/mb10.txt
+./test2/two.txt
+
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:1
+DATA: <no data>
+
+TO: 10.42.0.181:8081
+TYPE: List All Files
+DATA: ./test2
+./test2/hell.txt
+./test2/ttes
+./test2/ttes/mb10.txt
+./test2/two.txt
+./test4
+./test4/mb30.txt
+./test4/temp
+./test4/temp/hello.txt
+
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:6
+DATA: path:./test2/ttes/mb10.txt destination_path:./test4
+
+TO: 10.42.0.1:8080
+TYPE: Copy Request
+DATA: Request sent to storage server
+
+TO: 10.42.0.1:8080
+TYPE: Copy Request
+DATA: Request sent to storage server
+
+TO: 10.42.0.181:8081
+TYPE: Copy Request
+DATA: Success:Created a copy of the file/folder
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:1
+DATA: <no data>
+
+TO: 10.42.0.181:8081
+TYPE: List All Files
+DATA: ./test2
+./test2/hell.txt
+./test2/ttes
+./test2/ttes/mb10.txt
+./test2/two.txt
+./test4
+./test4/mb10.txt
+./test4/mb30.txt
+./test4/temp
+./test4/temp/hello.txt
+
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:7
+DATA: path:./test4/mb10.txt 
+
+TO: 10.42.0.181:8081
+TYPE: 7 type request
+DATA: IP: 10.42.0.1 Port: 2003
+
+FROM: 10.42.0.181:8081
+TYPE: Client Connection
+DATA: Connection Connected
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:1
+DATA: <no data>
+
+TO: 10.42.0.181:8081
+TYPE: List All Files
+DATA: ./test4
+./test4/mb30.txt
+./test4/temp
+./test4/temp/hello.txt
+
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:1
+DATA: <no data>
+
+TO: 10.42.0.181:8081
+TYPE: List All Files
+DATA: ./test2
+./test2/hell.txt
+./test2/ttes
+./test2/ttes/mb10.txt
+./test2/two.txt
+./test4
+./test4/mb30.txt
+./test4/temp
+./test4/temp/hello.txt
+
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:6
+DATA: path:./test2/ttes/mb10.txt destination_path:./test4
+
+TO: 10.42.0.1:8080
+TYPE: Copy Request
+DATA: Request sent to storage server
+
+TO: 10.42.0.1:8080
+TYPE: Copy Request
+DATA: Request sent to storage server
+
+TO: 10.42.0.181:8081
+TYPE: Copy Request
+DATA: Success:Created a copy of the file/folder
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:1
+DATA: <no data>
+
+TO: 10.42.0.181:8081
+TYPE: List All Files
+DATA: ./test2
+./test2/hell.txt
+./test2/ttes
+./test2/ttes/mb10.txt
+./test2/two.txt
+./test4
+./test4/mb10.txt
+./test4/mb30.txt
+./test4/temp
+./test4/temp/hello.txt
+
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:7
+DATA: path:./test4/mb10.txt 
+
+TO: 10.42.0.181:8081
+TYPE: 7 type request
+DATA: IP: 10.42.0.1 Port: 2003
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:7
+DATA: path:./test2/ttes/mb10.txt 
+
+TO: 10.42.0.181:8081
+TYPE: 7 type request
+DATA: IP: 10.42.0.1 Port: 2002
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:6
+DATA: path:./test4/temp destination_path:./test2
+
+TO: 10.42.0.1:8080
+TYPE: Copy Request
+DATA: Request sent to storage server
+
+TO: 10.42.0.1:8080
+TYPE: Copy Request
+DATA: Request sent to storage server
+
+TO: 10.42.0.181:8081
+TYPE: Copy Request
+DATA: Success:Created a copy of the file/folder
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:1
+DATA: <no data>
+
+TO: 10.42.0.181:8081
+TYPE: List All Files
+DATA: ./test2
+./test2/hell.txt
+./test2/temp
+./test2/ttes
+./test2/ttes/mb10.txt
+./test2/two.txt
+./test4
+./test4/mb10.txt
+./test4/mb30.txt
+./test4/temp
+./test4/temp/hello.txt
+
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:2
+DATA: path:./test4/temp/hello.txt 
+
+TO: 10.42.0.181:8081
+TYPE: 2 type request
+DATA: IP: 10.42.0.1 Port: 2003
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Client Connection
+DATA: Connection Connected
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:1
+DATA: <no data>
+
+TO: 10.42.0.181:8081
+TYPE: List All Files
+DATA: ./test2
+./test2/a.out
+./test2/hell.txt
+./test2/ttes
+./test2/ttes/mb10.txt
+./test2/two.txt
+
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:1
+DATA: <no data>
+
+TO: 10.42.0.181:8081
+TYPE: List All Files
+DATA: ./test2
+./test2/a.out
+./test2/hell.txt
+./test2/ttes
+./test2/ttes/mb10.txt
+./test2/two.txt
+./test4
+./test4/mb10.txt
+./test4/mb30.txt
+./test4/temp
+./test4/temp/hello.txt
+
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:5
+DATA: path:./test4/mb10.txt 
+
+TO: 10.42.0.1:8080
+TYPE: Delete Request
+DATA: Sending delete request to storage server
+
+FROM: 10.42.0.1:8080
+TYPE: Delete Request
+DATA: Received acknowledgment from storage server
+
+TO: 10.42.0.181:8081
+TYPE: Delete Request
+DATA: Success: Path ./test4/mb10.txt deleted successfully
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:1
+DATA: <no data>
+
+TO: 10.42.0.181:8081
+TYPE: List All Files
+DATA: ./test2
+./test2/a.out
+./test2/hell.txt
+./test2/ttes
+./test2/ttes/mb10.txt
+./test2/two.txt
+./test4
+./test4/mb30.txt
+./test4/temp
+./test4/temp/hello.txt
+
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:6
+DATA: path:./test2/ttes/mb10.txt destination_path:./test4
+
+TO: 10.42.0.1:8080
+TYPE: Copy Request
+DATA: Request sent to storage server
+
+TO: 10.42.0.1:8080
+TYPE: Copy Request
+DATA: Request sent to storage server
+
+TO: 10.42.0.181:8081
+TYPE: Copy Request
+DATA: Success:Created a copy of the file/folder
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:1
+DATA: <no data>
+
+TO: 10.42.0.181:8081
+TYPE: List All Files
+DATA: ./test2
+./test2/a.out
+./test2/hell.txt
+./test2/ttes
+./test2/ttes/mb10.txt
+./test2/two.txt
+./test4
+./test4/mb10.txt
+./test4/mb30.txt
+./test4/temp
+./test4/temp/hello.txt
+
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:7
+DATA: path:./test4/mb10.txt 
+
+TO: 10.42.0.181:8081
+TYPE: 7 type request
+DATA: IP: 10.42.0.1 Port: 2003
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:6
+DATA: path:./test4/temp destination_path:./test2
+
+TO: 10.42.0.1:8080
+TYPE: Copy Request
+DATA: Request sent to storage server
+
+TO: 10.42.0.1:8080
+TYPE: Copy Request
+DATA: Request sent to storage server
+
+TO: 10.42.0.181:8081
+TYPE: Copy Request
+DATA: Success:Created a copy of the file/folder
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:1
+DATA: <no data>
+
+TO: 10.42.0.181:8081
+TYPE: List All Files
+DATA: ./test2
+./test2/a.out
+./test2/hell.txt
+./test2/temp
+./test2/ttes
+./test2/ttes/mb10.txt
+./test2/two.txt
+./test4
+./test4/mb10.txt
+./test4/mb30.txt
+./test4/temp
+./test4/temp/hello.txt
+
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Client Connection
+DATA: Connection Connected
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:1
+DATA: <no data>
+
+TO: 10.42.0.181:8081
+TYPE: List All Files
+DATA: ./test2
+./test2/a.out
+./test2/hell.txt
+./test2/ttes
+./test2/ttes/mb10.txt
+./test2/two.txt
+./test4
+./test4/mb10.txt
+./test4/mb30.txt
+./test4/temp
+./test4/temp/hello.txt
+
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:6
+DATA: path:./test4/temp destination_path:./test2
+
+TO: 10.42.0.1:8080
+TYPE: Copy Request
+DATA: Request sent to storage server
+
+TO: 10.42.0.1:8080
+TYPE: Copy Request
+DATA: Request sent to storage server
+
+TO: 10.42.0.181:8081
+TYPE: Copy Request
+DATA: Success:Created a copy of the file/folder
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Client Connection
+DATA: Connection Connected
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:1
+DATA: <no data>
+
+TO: 10.42.0.181:8081
+TYPE: List All Files
+DATA: ./test2
+./test2/a.out
+./test2/hell.txt
+./test2/ttes
+./test2/ttes/mb10.txt
+./test2/two.txt
+
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:1
+DATA: <no data>
+
+TO: 10.42.0.181:8081
+TYPE: List All Files
+DATA: ./test2
+./test2/a.out
+./test2/hell.txt
+./test2/ttes
+./test2/ttes/mb10.txt
+./test2/two.txt
+./test4
+./test4/mb10.txt
+./test4/mb30.txt
+./test4/temp
+./test4/temp/hello.txt
+
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:6
+DATA: path:./test4/temp destination_path:./test2
+
+TO: 10.42.0.1:8080
+TYPE: Copy Request
+DATA: Request sent to storage server
+
+TO: 10.42.0.1:8080
+TYPE: Copy Request
+DATA: Request sent to storage server
+
+TO: 10.42.0.181:8081
+TYPE: Copy Request
+DATA: Success:Created a copy of the file/folder
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:6
+DATA: path:./test4/mb30.txt destination_path:./test2
+
+TO: 10.42.0.1:8080
+TYPE: Copy Request
+DATA: Request sent to storage server
+
+FROM: 10.42.0.181:8081
+TYPE: Client Connection
+DATA: Connection Connected
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:1
+DATA: <no data>
+
+TO: 10.42.0.181:8081
+TYPE: List All Files
+DATA: ./test4
+./test4/mb10.txt
+./test4/mb30.txt
+./test4/temp
+./test4/temp/hello.txt
+
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:1
+DATA: <no data>
+
+TO: 10.42.0.181:8081
+TYPE: List All Files
+DATA: ./test2
+./test2/a.out
+./test2/hell.txt
+./test2/ttes
+./test2/ttes/mb10.txt
+./test2/two.txt
+./test4
+./test4/mb10.txt
+./test4/mb30.txt
+./test4/temp
+./test4/temp/hello.txt
+
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:6
+DATA: path:./test4/temp destination_path:./test2
+
+TO: 10.42.0.1:8080
+TYPE: Copy Request
+DATA: Request sent to storage server
+
+TO: 10.42.0.1:8080
+TYPE: Copy Request
+DATA: Request sent to storage server
+
+TO: 10.42.0.181:8081
+TYPE: Copy Request
+DATA: Success:Created a copy of the file/folder
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Client Connection
+DATA: Connection Connected
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:1
+DATA: <no data>
+
+TO: 10.42.0.181:8081
+TYPE: List All Files
+DATA: ./test2
+./test2/a.out
+./test2/hell.txt
+./test2/ttes
+./test2/ttes/mb10.txt
+./test2/two.txt
+./test4
+./test4/mb10.txt
+./test4/mb30.txt
+./test4/temp
+./test4/temp/hello.txt
+
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:6
+DATA: path:./test4/temp destination_path:./test2
+
+TO: 10.42.0.1:8080
+TYPE: Copy Request
+DATA: Request sent to storage server
+
+TO: 10.42.0.1:8080
+TYPE: Copy Request
+DATA: Request sent to storage server
+
+TO: 10.42.0.181:8081
+TYPE: Copy Request
+DATA: Success:Created a copy of the file/folder
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Client Connection
+DATA: Connection Connected
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:1
+DATA: <no data>
+
+TO: 10.42.0.181:8081
+TYPE: List All Files
+DATA: ./test2
+./test2/a.out
+./test2/hell.txt
+./test2/ttes
+./test2/ttes/mb10.txt
+./test2/two.txt
+./test4
+./test4/mb10.txt
+./test4/temp
+./test4/temp/hello.txt
+
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:6
+DATA: path:./test4 destination_path:./test2
+
+TO: 10.42.0.1:8080
+TYPE: Copy Request
+DATA: Request sent to storage server
+
+TO: 10.42.0.1:8080
+TYPE: Copy Request
+DATA: Request sent to storage server
+
+TO: 10.42.0.181:8081
+TYPE: Copy Request
+DATA: Success:Created a copy of the file/folder
+
+FROM: 10.42.0.181:8081
+TYPE: Client Connection
+DATA: Connection Connected
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:1
+DATA: <no data>
+
+TO: 10.42.0.181:8081
+TYPE: List All Files
+DATA: ./test1/backup
+./test1/backup/oneb.txt
+
+
+FROM: 10.42.0.181:8081
+TYPE: Client Connection
+DATA: Connection Connected
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.181:8081
+TYPE: Client Request
+DATA: Request Received
+
+FROM: 10.42.0.181:8081
+TYPE: Request_type:1
+DATA: <no data>
+
+TO: 10.42.0.181:8081
+TYPE: List All Files
+DATA: ./test1
+./test1/meme.txt
+./test1/onasd.txt
+./test1/one.txt
+./test1/whats.txt
+
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Connection accepted
+
+FROM: 10.42.0.1:8080
+TYPE: Storage Server Connection
+DATA: Storage server added
+

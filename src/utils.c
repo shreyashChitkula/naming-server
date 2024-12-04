@@ -88,7 +88,13 @@ int send_message_to_host(char *ip, int port, Packet *packet)
 //     send.request_type = 9;
 //     send_message_to_host("10.42.0.25", 8083, &send);
 // }
-
+int status_check(char * ip,int port){
+    for (int i = 0; i < storage_server_count; i++)
+    {
+        
+    }
+    
+}
 
 char *extract_file_name(char *path)
 {

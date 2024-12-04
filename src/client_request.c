@@ -193,6 +193,7 @@ void copy(ClientMessage *Clientmessage, int client_socket)
                     printf("sending packet\n");
                     send(storage_server_sockets[destinationIndex], &dataPacket, sizeof(Packet), 0);
                     recv_full(storage_server_sockets[destinationIndex], &sample, sizeof(int));
+                    printf("Data:%s\n",dataPacket.data);
                     printf("Received ack:%d\n", sample);
                 }
                 else if (dataPacket.request_type == STOP)

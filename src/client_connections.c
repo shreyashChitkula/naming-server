@@ -84,6 +84,7 @@ void *handle_client_request(void *arg)
             }
             else
             {
+                
                 snprintf(response, BUFFER_LENGTH, "IP: %s Port: %d", ip, port);
             }
             printf("%s\n", response);

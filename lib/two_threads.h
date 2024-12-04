@@ -41,6 +41,8 @@ typedef struct
     int client_port;
     int pathscount;                         // Number of accessible paths
     char paths[MAX_PATHS][MAX_PATH_LENGTH]; // 2D array for paths
+    int status;
+    // int backups[2];
 } StorageServerInfo;
 
 #pragma pack(1)

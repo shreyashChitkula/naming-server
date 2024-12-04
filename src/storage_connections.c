@@ -27,28 +27,9 @@ void *handle_storage_server(void *arg)
         pthread_exit(NULL);
     }
     clear_socket_buffer(socket_fd);
-    // Clear any remaining data in the socket buffer
-    // char temp_buffer[1024]; // Temporary buffer for clearing
-    // while (recv(socket_fd, temp_buffer, sizeof(temp_buffer), MSG_DONTWAIT) > 0)
-    // {
-    //     // Discard any additional data in the buffer
-    // }
-
-    // if (errno != EAGAIN && errno != EWOULDBLOCK)
-    // {
-    //     perror("Error while clearing the socket buffer");
-    // }
-    // Lock before modifying the shared storage server list
     pthread_mutex_lock(&lock);
     if (storage_server_count < MAX_STORAGE_SERVERS)
     {
-        // for (int i = 0; i < info.pathscount; i++)
-        // {
-        //     if (hashmap_insert(info.paths[i], &info) != 0)
-        //     {
-        //         fprintf(stderr, "Failed to insert path into HashMap: %s\n", info.paths[i]);
-        //     }
-        // }
 
         printf("Storage Server Registered:\n IP: %s, NM Port: %d, Client Port: %d, Paths Count: %d\n",
                info.ip, info.nm_port, info.client_port, info.pathscount);
@@ -178,22 +159,6 @@ void update_storage_server(int index, int new_socket_fd, StorageServerInfo *stor
         insertPath(trieRoot, storageServer->paths[i], storageServer->ip, storageServer->client_port);
     }
 
-    // Remove paths that no longer exist
-    // for (int i = 0; i < storageServer->pathscount; i++)
-    // {
-    //     strcpy(storageServer[index].paths[i], storageServer->paths[i]);
-    // }
-
-    // // Add new paths
-    // int count = 0;
-    // for (int i = 0; i < new_path_count; i++)
-    // {
-    //     if (!path_exists(&storage_servers[index], new_paths[i]))
-    //     {
-    //         strncpy(storage_servers[index].paths[count++], new_paths[i], MAX_PATH_LENGTH);
-    //     }
-    // }
-
     storage_servers[index].pathscount = storageServer->pathscount;
     printf("Paths updated successfully.\n");
 }
@@ -225,6 +190,7 @@ int add_or_update_storage_server(StorageServerInfo *storageServer, int socket_fd
         printf("Closing socket %d\n", storage_server_sockets[index]);
         close(storage_server_sockets[index]); // Close the new socket as it's not needed
         storage_server_sockets[index] = socket_fd;
+        storage_servers[index].status = 1;
         return 0; // No update needed
     }
 
@@ -242,6 +208,7 @@ int add_or_update_storage_server(StorageServerInfo *storageServer, int socket_fd
     storage_servers[storage_server_count].client_port = storageServer->client_port;
     storage_servers[storage_server_count].nm_port = storageServer->nm_port;
     storage_servers[storage_server_count].pathscount = storageServer->pathscount;
+    storage_servers[storage_server_count].status = 1;
     printf("Checking if paths %d inserted at %d\n", storage_servers[storage_server_count].pathscount, storage_server_count);
 
     for (int i = 0; i < storageServer->pathscount; i++)
