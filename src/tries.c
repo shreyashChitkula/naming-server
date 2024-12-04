@@ -259,6 +259,9 @@ void handle_list_all_files(int socket_fd)
     get_all_paths(trieRoot, all_paths, sizeof(all_paths));
     // print all paths
     printf("%s\n", all_paths);
+    if(strlen(all_paths)==0){
+        snprintf(all_paths,MAX_PATH_LENGTH,"No files found");
+    }
     bookkeep(socket_fd, 1, "List All Files", all_paths);
     send(socket_fd, all_paths, strlen(all_paths), 0);
 }
